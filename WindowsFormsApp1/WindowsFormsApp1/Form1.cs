@@ -17,15 +17,35 @@ namespace WindowsFormsApp1
         int y;
         List<Point> points = new List<Point>();
         List<Point> Rpoints = new List<Point>();
+        List<Shape> shapes = new List<Shape>();
+        
         Graphics g;
         Random rand = new Random();
-        
+
+        private void drawRectangle()
+        {
+            rectangle rectangle = new rectangle();
+            rectangle.startx = 50;
+            rectangle.starty = 50;
+            rectangle.width = 400;
+            rectangle.length = 200;
+            Graphics g = panel1.CreateGraphics();
+            foreach (Shape s in shapes)          // Assuming shapes is List<shape>
+                s.Draw(g);
+        }
+
 
         public Form1()
         {
             InitializeComponent();
-            
+            this.Width = 675;
+            this.Height = 500;
+
+            drawRectangle();
+
         }
+
+  
 
         private void Form1_Load(object sender, EventArgs e)
         {
@@ -37,14 +57,21 @@ namespace WindowsFormsApp1
             points.Add(e.Location);
             Rpoints.Add(e.Location);
             panel1.Invalidate();
+
+            
+
             foreach (Point pts in points)
             {
                 propertyGrid1.SelectedObject = pts;
+                rectangle rectangle = new rectangle();
+                rectangle.startx = pts.X;
+                rectangle.starty = pts.Y;
+                rectangle.width = 200;
+                rectangle.length = 100;
+                shapes.Add(rectangle);
             }
-             
-            // If X and Y coordinates touch a graphic
 
-            // Update property grid
+
         }
 
         private SolidBrush randomRGB()
@@ -67,21 +94,16 @@ namespace WindowsFormsApp1
 
         private void panel1_Paint(object sender, PaintEventArgs e)
         {
-            g = e.Graphics;    // only ever use this one for persistent graphics!!
-            //SolidBrush RGBbrush = new SolidBrush(Color.FromArgb());
-            SolidBrush rBrush = randomRGB();
-            int x = randomSize();
-            int y = x; 
-            if (listBox1.SelectedIndex == 0)
+            Graphics g = panel1.CreateGraphics();
+            foreach (Shape s in shapes)
             {
-                foreach (Point pt in points)
-                    g.FillEllipse(rBrush, pt.X, pt.Y, x, y);
+                s.Draw(g);
             }
-
         }
 
         private void button1_Click(object sender, EventArgs e)
         {
+            panel1.Controls.Clear();
             points.Clear();
         }
     }
