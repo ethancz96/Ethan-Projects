@@ -18,6 +18,9 @@ namespace WindowsFormsApp1
         List<Point> points = new List<Point>();
         List<Point> Rpoints = new List<Point>();
         Graphics g;
+        Random rand = new Random();
+        
+
         public Form1()
         {
             InitializeComponent();
@@ -34,52 +37,47 @@ namespace WindowsFormsApp1
             points.Add(e.Location);
             Rpoints.Add(e.Location);
             panel1.Invalidate();
+            foreach (Point pts in points)
+            {
+                propertyGrid1.SelectedObject = pts;
+            }
+             
+            // If X and Y coordinates touch a graphic
+
+            // Update property grid
         }
 
-        //private void panel1_Paint(object sender, PaintEventArgs e)
-        //{
-        //    e.Graphics.SmoothingMode = SmoothingMode.AntiAlias;
-        //    e.Graphics.FillEllipse(Brushes.Red, new Rectangle(10, 10, 32, 32));
-        //}
+        private SolidBrush randomRGB()
+        {
+            int r = rand.Next(0, 256); // Random number between 0 - 255
+            int g = rand.Next(0, 256);
+            int b = rand.Next(0, 256);
 
-        //private void panel1_Paint(object sender, PaintEventArgs e)
-        //{
-        //    // Create graphics class
-        //    Graphics g = panel1.CreateGraphics();
-        //    // Set painting quality to high
-        //    e.Graphics.SmoothingMode = SmoothingMode.AntiAlias;
+            SolidBrush randomBrush = new SolidBrush(Color.FromArgb(r, g, b));
 
-        //    // Create a new pen class
-        //    Pen p = new Pen(Color.Black);
+            return randomBrush;
+        }
 
-        //    // If Circle is selected
-        //    if (listBox1.SelectedIndex == 0)
-        //    {
-        //        SolidBrush sb = new SolidBrush(Color.Red);
-        //        g.DrawEllipse(p, x - 50, y - 50, 100, 100);
-        //        g.FillEllipse(sb, x - 50, y - 50, 100, 100);
-        //    }
-
-        //    // If rectangle is selected
-        //    if (listBox1.SelectedIndex == 1)
-        //    {
-        //        SolidBrush sb = new SolidBrush(Color.Blue);
-        //        g.DrawRectangle(p, x - 50, y - 50, 100, 100);
-        //        g.FillRectangle(sb, x - 50, y - 50, 100, 100);
-
-        //    }
-        //}
+        private int randomSize()
+        {
+            int randomNumber = rand.Next(50, 176);
+            return randomNumber;
+        }
 
 
         private void panel1_Paint(object sender, PaintEventArgs e)
         {
             g = e.Graphics;    // only ever use this one for persistent graphics!!
-
+            //SolidBrush RGBbrush = new SolidBrush(Color.FromArgb());
+            SolidBrush rBrush = randomRGB();
+            int x = randomSize();
+            int y = x; 
             if (listBox1.SelectedIndex == 0)
             {
                 foreach (Point pt in points)
-                    g.FillEllipse(Brushes.Blue, pt.X, pt.Y, 50, 50);
+                    g.FillEllipse(rBrush, pt.X, pt.Y, x, y);
             }
+
         }
 
         private void button1_Click(object sender, EventArgs e)
