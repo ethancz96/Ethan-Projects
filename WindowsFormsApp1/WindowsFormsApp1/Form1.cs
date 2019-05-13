@@ -18,21 +18,10 @@ namespace WindowsFormsApp1
         List<Point> points = new List<Point>();
         List<Point> Rpoints = new List<Point>();
         List<Shape> shapes = new List<Shape>();
+        Point currentPoints;
         
         Graphics g;
         Random rand = new Random();
-
-        private void drawRectangle()
-        {
-            rectangle rectangle = new rectangle();
-            rectangle.startx = 50;
-            rectangle.starty = 50;
-            rectangle.width = 400;
-            rectangle.length = 200;
-            Graphics g = panel1.CreateGraphics();
-            foreach (Shape s in shapes)          // Assuming shapes is List<shape>
-                s.Draw(g);
-        }
 
 
         public Form1()
@@ -40,9 +29,6 @@ namespace WindowsFormsApp1
             InitializeComponent();
             this.Width = 675;
             this.Height = 500;
-
-            drawRectangle();
-
         }
 
   
@@ -55,6 +41,7 @@ namespace WindowsFormsApp1
         private void panel1_MouseClick(object sender, MouseEventArgs e)
         {
             points.Add(e.Location);
+            currentPoints = e.Location;
             Rpoints.Add(e.Location);
             panel1.Invalidate();
 
@@ -75,8 +62,6 @@ namespace WindowsFormsApp1
             {
                 propertyGrid1.SelectedObject = shape;
             }
-
-
         }
 
         private SolidBrush randomRGB()
@@ -99,6 +84,27 @@ namespace WindowsFormsApp1
 
         private void panel1_Paint(object sender, PaintEventArgs e)
         {
+            // Check if current points intersect or is contained in rectangle
+            Boolean isRectangle = false;
+            foreach (Shape shape in shapes)
+            {
+                if (shape.GetRectangle().Contains(currentPoints))
+                {
+                    isRectangle = true;
+                }
+            }
+
+            if (isRectangle)
+            {
+                MessageBox.Show("This is a rectangle");
+            }
+
+            // Check if current points intersect or is contained in Circle
+            foreach (Shape shape in shapes)
+            {
+                
+            }
+
             Graphics g = panel1.CreateGraphics();
             foreach (Shape s in shapes)
             {
@@ -108,6 +114,9 @@ namespace WindowsFormsApp1
 
         private void button1_Click(object sender, EventArgs e)
         {
+
+            // How to generate random color ONLY for new instances of rectangles?
+
             panel1.Controls.Clear();
             points.Clear();
         }
