@@ -62,13 +62,18 @@ namespace WindowsFormsApp1
 
             foreach (Point pts in points)
             {
-                propertyGrid1.SelectedObject = pts;
+                // propertyGrid1.SelectedObject = pts;
                 rectangle rectangle = new rectangle();
                 rectangle.startx = pts.X;
                 rectangle.starty = pts.Y;
                 rectangle.width = 200;
                 rectangle.length = 100;
                 shapes.Add(rectangle);
+            }
+
+            foreach (Shape shape in shapes)
+            {
+                propertyGrid1.SelectedObject = shape;
             }
 
 
