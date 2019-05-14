@@ -10,6 +10,7 @@ namespace WindowsFormsApp1
         public int starty { get; set; }
 
         public abstract Rectangle GetRectangle();
+        // Make a method that returns object type instead of hard coded rectangle
         public virtual void Draw(Graphics g)
         {
         }

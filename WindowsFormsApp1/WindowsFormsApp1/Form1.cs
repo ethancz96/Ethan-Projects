@@ -22,6 +22,7 @@ namespace WindowsFormsApp1
         
         Graphics g;
         Random rand = new Random();
+        Object objectType;
 
 
         public Form1()
@@ -50,12 +51,20 @@ namespace WindowsFormsApp1
             foreach (Point pts in points)
             {
                 // propertyGrid1.SelectedObject = pts;
-                rectangle rectangle = new rectangle();
-                rectangle.startx = pts.X;
-                rectangle.starty = pts.Y;
-                rectangle.width = 200;
-                rectangle.length = 100;
-                shapes.Add(rectangle);
+                if (listBox1.SelectedIndex == 0)
+                {
+                    rectangle rectangle = new rectangle();
+                    rectangle.startx = pts.X;
+                    rectangle.starty = pts.Y;
+                    rectangle.width = 200;
+                    rectangle.length = 100;
+                    shapes.Add(rectangle);
+                }
+
+                //if (listBox1.SelectedIndex == 1)
+                //{
+                //    circle circle = new circle();
+                //}
             }
 
             foreach (Shape shape in shapes)
@@ -91,12 +100,16 @@ namespace WindowsFormsApp1
                 if (shape.GetRectangle().Contains(currentPoints))
                 {
                     isRectangle = true;
+                    propertyGrid1.SelectedObject = shape;
+                    objectType = shape.GetType();
                 }
             }
 
             if (isRectangle)
             {
-                MessageBox.Show("This is a rectangle");
+                MessageBox.Show("This is a " + objectType);
+                propertyGrid1.Show();
+                
             }
 
             // Check if current points intersect or is contained in Circle

@@ -48,6 +48,7 @@
             this.listBox1.FormattingEnabled = true;
             this.listBox1.ItemHeight = 31;
             this.listBox1.Items.AddRange(new object[] {
+            "Rectangle",
             "Circle"});
             this.listBox1.Location = new System.Drawing.Point(999, 39);
             this.listBox1.Name = "listBox1";
